@@ -63,7 +63,7 @@ translate([0,35,4]) e3d_hot_end_assembly(E3Dv6, 3, naked = false, resistor_wire_
 translate([blower_exit(RB5015)/2,15/2+3,5]){
     //fan(fan50x15);
     rotate([90,0,180]){
-        blower(RB5015);
+        //blower(RB5015);
     }
 }
 
@@ -138,6 +138,33 @@ module sliceXZBack(){
         translate([-500,-1000,-500])cube([1000,1000,1000]);
     }
 }
+
+module chainHull(){
+    for (i = [0: $children-2])
+        hull(){
+            children(i);
+            children(i+1);
+        }
+}
+
+module fanDuct(){
+    difference(){
+        chainHull(){
+            translate([-10,15/2+3,1]) cube([20,15,4]);
+            translate([-10,12,-10]) cube([20,11,4]);
+            translate([-10,12,-40]) cube([20,11,4]);
+            translate([-10,20,-54]) rotate([45,0,0]) cube([20,11,4]);
+        }
+        chainHull(){
+            translate([-10+2,15/2+3+2,1]) cube([20-4,15-4,5]);
+            translate([-10+2,12+2,-10]) cube([20-4,11-4,4]);
+            translate([-10+2,12+2,-40]) cube([20-4,11-4,4]);
+            translate([-10+2,20+2,-54]) rotate([45,0,0]) cube([20-4,11-4,4]);
+        }
+    }
+}
+
+fanDuct()
 
 *sliceXZBack(){
     xCarraige();
