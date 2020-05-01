@@ -133,6 +133,10 @@ module xCarraige(){
         translate([10,129,1]) rotate([90,0,0]) cylinder(d=3,h=100);
         translate([-10,129,1]) rotate([90,0,0]) cylinder(d=3,h=100);
         translate([-10+0.15,15/2+3+0.15,-10]) cube([20+0.3,15+0.3,40]);
+        translate([10,20,10]) rotate([90,0,0]) cylinder(d=3,h=100);
+        translate([-4,30,-9]) rotate([90,0,0]) cylinder(d=3,h=100);
+        translate([-15,40,3]) rotate([90,0,0]) cylinder(d=3,h=100);
+        
         
 
     }
@@ -205,8 +209,22 @@ module xCarraigeBack(){
         }
 }
 
-hotendHolderBracket();
-fanDuct();
-xCarraigeFront();
+module explode(distance = [10, 0, 0], center = false, enable = true) {
+    if(enable){
+        offset = center ? (($children * distance) / 2 - distance / 2) * -1 : [0, 0 , 0];
+        for(i = [0 : 1 : $children - 1]) {
+            translate(i * distance + offset) {
+                children(i);
+            }
+        }
+    } else {
+        children();
+    }
+}
+
+
 xCarraigeBack();
+xCarraigeFront();
+hotendHolderBracket();
 hotEnd();
+fanDuct();
