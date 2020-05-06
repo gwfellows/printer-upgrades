@@ -1,2 +1,2 @@
 # printer-upgrades
-3d printable upgrades for the JGAurora 3D printer
+3d printable upgrades for the JGAurora A3 3D printer
