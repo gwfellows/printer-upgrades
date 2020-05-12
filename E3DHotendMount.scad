@@ -28,25 +28,6 @@ module posBearing2(){
     }
 }
 
-module posFanHole1(){
-    translate([blower_exit(RB5015)/2,15/2+3,5]){
-        rotate([90,0,180]){
-            translate([4.3, 45.4]){
-                children();
-            }
-        }
-    }
-}
-
-module posFanHole2(){
-    translate([blower_exit(RB5015)/2,15/2+3,5]){
-        rotate([90,0,180]){
-            translate([47.3,7.4]){
-                children();
-            }
-        }
-    }
-}
 
 posBearing1(){
     linear_bearing(LM8LUU);
@@ -59,101 +40,7 @@ posBearing2(){
 }
 
 module hotEnd(){
-translate([0,35,4]) e3d_hot_end_assembly(E3Dv6, 3, naked = false, resistor_wire_rotate = [-15,0,0]);
-}
-
-translate([blower_exit(RB5015)/2,15/2+3,5]){
-    //fan(fan50x15);
-    rotate([90,0,180]){
-        blower(RB5015);
-    }
-}
-
-module xCarraige(){
-    difference(){
-        union(){
-            hull(){
-                posBearing1(){
-                    cylinder(d=5, h=50, center=true);
-                }
-                posBearing2(){
-                    translate([0,0,3])cylinder(d=5, h=10, center=true);
-                }
-                posFanHole1(){
-                translate([0,0,-5])cylinder(h=5,d=5);
-                }
-                posFanHole2(){
-                translate([0,0,-5])cylinder(h=5,d=5);
-                }
-            }
-            posBearing1(){
-                cylinder(d=20, h=50, center=true);
-            }
-            posBearing2(){
-                cylinder(d=20, h=27, center=true);
-            }
-            posFanHole1(){
-            translate([0,0,-5])cylinder(h=5,d=8);
-            }
-            posFanHole2(){
-            translate([0,0,-5])cylinder(h=5,d=8);
-            }
-            translate([0-25/2,0,-5]){
-                cube([25,35-0.3,13]);
-            }
-        }
-        
-        posBearing1(){
-                cylinder(d=15.3, h=45.3, center=true);
-            }
-        posBearing2(){
-                cylinder(d=15.3, h=24.3, center=true);
-            }
-        posBearing1(){
-                cylinder(d=9, h=100, center=true);
-            }
-        posBearing2(){
-                cylinder(d=9, h=100, center=true);
-            }
-        posFanHole1(){
-            translate([0,0,-50]) cylinder(h=100,d=4);
-            }
-        posFanHole1(){
-            translate([0,0,-50+5])cylinder(h=40,d=10);
-        }
-        posFanHole2(){
-            translate([0,0,-50])cylinder(h=100,d=4);
-        }
-        posFanHole2(){
-            translate([0,0,-50+5])cylinder(h=40,d=10);
-        }
-        //translate([-60,20,-10]) cube([200,15,100]);
-        hotEnd();
-        translate([0,35,-10]) cylinder(d=10,h=100);
-        translate([10,129,1]) rotate([90,0,0]) cylinder(d=3,h=100);
-        translate([-10,129,1]) rotate([90,0,0]) cylinder(d=3,h=100);
-        translate([-10+0.15,15/2+3+0.15,-10]) cube([20+0.3,15+0.3,40]);
-        translate([10,20,10]) rotate([90,0,0]) cylinder(d=3,h=100);
-        translate([-4,30,-9]) rotate([90,0,0]) cylinder(d=3,h=100);
-        translate([-15,40,3]) rotate([90,0,0]) cylinder(d=3,h=100);
-        
-        
-
-    }
-}
-
-module sliceXZFront(){
-    intersection(){
-        children();
-        translate([-500,0.15,-500])cube([1000,1000,1000]);
-    }
-}
-
-module sliceXZBack(){
-    intersection(){
-        children();
-        translate([-500,-1000-0.15,-500])cube([1000,1000,1000]);
-    }
+translate([0,27,14]) e3d_hot_end_assembly(E3Dv6, 3, naked = false, resistor_wire_rotate = [-15,0,0]);
 }
 
 module chainHull(){
@@ -164,22 +51,6 @@ module chainHull(){
         }
 }
 
-module fanDuct(){
-    difference(){
-        chainHull(){
-            translate([-10,15/2+3,-5]) cube([20,15,10]);
-            translate([-10,12,-10]) cube([20,11,4]);
-            translate([-10,12,-40]) cube([20,11,4]);
-            translate([-10,20,-54]) rotate([45,0,0]) cube([20,11,4]);
-        }
-        chainHull(){
-            translate([-10+2,15/2+3+2,1]) cube([20-4,15-4,5]);
-            translate([-10+2,12+2,-10]) cube([20-4,11-4,4]);
-            translate([-10+2,12+2,-40]) cube([20-4,11-4,4]);
-            translate([-10+2,20+2,-54]) rotate([45,0,0]) cube([20-4,11-4,4]);
-        }
-    }
-}
 
 module hotendHolderBracket(){
         difference(){
@@ -197,17 +68,7 @@ module hotendHolderBracket(){
 
     }
 
-module xCarraigeFront(){
-        sliceXZFront(){
-            xCarraige();
-        }
-}
 
-module xCarraigeBack(){
-        sliceXZBack(){
-            xCarraige();
-        }
-}
 
 module explode(distance = [10, 0, 0], center = false, enable = true) {
     if(enable){
@@ -223,8 +84,12 @@ module explode(distance = [10, 0, 0], center = false, enable = true) {
 }
 
 
-xCarraigeBack();
-xCarraigeFront();
-hotendHolderBracket();
+translate([0,10,53])rotate([-90,0,0])NEMA(NEMA17, shaft_angle = 0);
+
+translate([-45/2,-20,-25]) rotate([90,0,0]) blower(RB5015);
+
+//hotendHolderBracket();
 hotEnd();
-fanDuct();
+
+
+
