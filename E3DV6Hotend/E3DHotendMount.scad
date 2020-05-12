@@ -1,5 +1,6 @@
 include <C:/Users/gfellows/OneDrive - Eastside Preparatory School/Documents/GitHub/NopSCADlib/lib.scad>
 include <C:/Users/gfellows/OneDrive - Eastside Preparatory School/Documents/GitHub/NopSCADlib/vitamins/e3d.scad>
+include <ExtruderBlock.scad>
 
 linearShaftDiameter = 8;
 linearShaftSpacing = 45;
@@ -40,7 +41,7 @@ posBearing2(){
 }
 
 module hotEnd(){
-translate([0,27,14]) e3d_hot_end_assembly(E3Dv6, 3, naked = false, resistor_wire_rotate = [-15,0,0]);
+translate([0,27,17]) e3d_hot_end_assembly(E3Dv6, 3, naked = false, resistor_wire_rotate = [-15,0,0]);
 }
 
 module chainHull(){
@@ -83,8 +84,7 @@ module explode(distance = [10, 0, 0], center = false, enable = true) {
     }
 }
 
-
-translate([0,10,53])rotate([-90,0,0])NEMA(NEMA17, shaft_angle = 0);
+translate([0,30,42]) rotate([90,0,0]) rotate([0,0,90]) extruderAssembly();
 
 translate([-45/2,-20,-25]) rotate([90,0,0]) blower(RB5015);
 

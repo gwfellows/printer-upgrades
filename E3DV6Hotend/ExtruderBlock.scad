@@ -1,7 +1,5 @@
 include <C:/Users/gfellows/OneDrive - Eastside Preparatory School/Documents/GitHub/NopSCADlib/lib.scad>
 
-NEMA(NEMA17, shaft_angle = 0);
-
 filamentPos = [0,NEMA_width(NEMA17)/2-15,15/2];
 
 module mainBlock(){
@@ -51,7 +49,7 @@ module secondaryBlock(){
                     }
                 }
 
-                linear_extrude(15){
+                linear_extrude(15-3.8-0.1){
                         difference(){
                             NEMA_outline(NEMA17);
                             translate([-50+10,-25]){
@@ -64,11 +62,14 @@ module secondaryBlock(){
                 cylinder(d=3.7,h=100,center=true);
             }
             translate(filamentPos){
-                translate([25,0,0]) rotate([0,90,0]) cylinder(d=3.2,h=50,center=true);
+                translate([25,0,-3.8-0.1]) rotate([0,90,0]) cylinder(d=3.2,h=50,center=true);
             }
         }
     }
 }
 
-mainBlock();
-secondaryBlock();
+module extruderAssembly(){
+    color([0.9,0.9,0.9])mainBlock();
+    color([0.9,0.9,0.9]) secondaryBlock();
+    NEMA(NEMA17, shaft_angle = 0);
+}
