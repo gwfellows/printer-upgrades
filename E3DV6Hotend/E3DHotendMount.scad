@@ -1,6 +1,9 @@
 include <C:/Users/gfellows/OneDrive - Eastside Preparatory School/Documents/GitHub/NopSCADlib/lib.scad>
 include <C:/Users/gfellows/OneDrive - Eastside Preparatory School/Documents/GitHub/NopSCADlib/vitamins/e3d.scad>
 include <ExtruderBlock.scad>
+use <xCarriage.scad>
+use <extruder-body.scad>
+use <extruder-cover.scad>
 
 linearShaftDiameter = 8;
 linearShaftSpacing = 45;
@@ -41,7 +44,7 @@ posBearing2(){
 }
 
 module hotEnd(){
-translate([0,27,17]) e3d_hot_end_assembly(E3Dv6, 3, naked = false, resistor_wire_rotate = [-15,0,0]);
+translate([0,27,4.5]) rotate([0,0,180])e3d_hot_end_assembly(E3Dv6, 3, naked = true, resistor_wire_rotate = [-15,0,0]);
 }
 
 module chainHull(){
@@ -84,10 +87,17 @@ module explode(distance = [10, 0, 0], center = false, enable = true) {
     }
 }
 
-translate([0,30,42]) rotate([90,0,0]) rotate([0,0,90]) extruderAssembly();
+translate([6.15,12+15+15/2,29.5]) rotate([90,0,0]) rotate([0,0,90]) extruderAssembly();
 
-translate([-45/2,-20,-25]) rotate([90,0,0]) blower(RB5015);
+translate([(45/2-12)+6,12+15+15,-40-3]) rotate([0,0,180]) rotate([90,0,0]) blower(RB5015);
 
+translate([22.5,27,-30/2-4]) rotate([0,0,90]) rotate([90,0,0]) fan(fan30x10);
+
+translate([33/2,15/2+(33/2-15/2)/2,-linearShaftSpacing/2])rotate([90,0,0]) x_carriage();
+
+translate([-17.5,12,8.5]) rotate([-90,0,0]) ext_body();
+
+translate([-17.5,12,8.5]) rotate([-90,0,0]) ext_cover();
 //hotendHolderBracket();
 hotEnd();
 
